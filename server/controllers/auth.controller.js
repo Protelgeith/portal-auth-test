@@ -19,13 +19,13 @@ module.exports = {
 
 
 function generateToken(user, res) {
-  const rfc = user.rfc;
+  const email = user.email;
   let expirationTime;
 
   return new Promise((resolve, reject) => {
 
         Model.findOne({
-          'rfc': rfc
+          'email': email
         }).exec()
           .then(user => {
             let rol = user.rol.toString();
