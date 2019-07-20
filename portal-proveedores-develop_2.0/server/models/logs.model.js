@@ -1,0 +1,19 @@
+const mongoose = require('mongoose');
+
+const Schema = mongoose.Schema;
+
+const logsSchema = new Schema({
+  user:  { type: Schema.Types.ObjectId, ref: 'User' },
+  autorizacion: {
+    usuarioAutorizador: String,
+    fechaAutorizacion: String
+  },
+  creacion: {
+    usuarioCreador: String,
+    fechaCreacion: String
+  }
+});
+
+const Logs = mongoose.model('Logs', logsSchema);
+
+module.exports = Logs;

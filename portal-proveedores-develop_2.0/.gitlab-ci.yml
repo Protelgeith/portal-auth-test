@@ -1,0 +1,102 @@
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+  - node_modules/
+
+stages:
+  - setup
+  - test
+  - lint
+  - coverage
+  - build
+  - deploy_test
+  - deploy_pprd
+  - deploy_prod
+
+setup:
+  stage: setup
+  script:
+  - npm cache verify
+  - npm prune
+  # - npm update
+  # - yarn install
+  - 'echo setup'
+  tags:
+    - linux
+
+test_front:
+  stage: test
+  script:
+    - 'echo Test en front'
+  tags:
+    - linux
+
+test_back:
+  stage: test
+  script:
+    - 'echo Test en back'
+  tags:
+    - linux
+
+lint_front:
+  stage: lint
+  script:
+    - 'echo Lint en front'
+  tags:
+    - linux
+
+lint_back:
+  stage: lint
+  script:
+    - 'echo Lint en front'
+  tags:
+    - linux
+
+coverage:
+  stage: coverage
+  script:
+    - 'echo coverage'
+  coverage: '/Code coverage: \d+\.\d+/'
+  tags:
+    - linux
+
+build:
+  stage: build
+  script:
+    - 'echo build'
+  only:
+    - develop
+    - release
+    - master
+  tags:
+    - linux
+
+deploy_test:
+  stage: deploy_test
+  script:
+    - 'echo deploy_test'
+  only:
+    - develop
+  when: manual
+  tags:
+    - linux
+
+deploy_pprd:
+  stage: deploy_pprd
+  script:
+    - 'echo deploy_pprd'
+  only:
+    - release
+  when: manual
+  tags:
+    - linux
+
+deploy_prodd:
+  stage: deploy_prod
+  script:
+    - 'echo deploy_prod'
+  only:
+    - master
+  when: manual
+  tags:
+    - linux
