@@ -1,0 +1,28 @@
+::ng-deep .mat-dialog-container{
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: none !important
+}
+.icon-background{
+    background-color: #000000b0;
+    border-radius: 50%;
+    width: 50px;
+    height: 35px;
+    display: inline;
+    z-index: 7;
+    position: absolute;
+    text-align: center;
+}
+
+.icon-background:hover{
+    background-color: #0000006b;
+    cursor: pointer;
+}
+
+.action{
+    font-size: 25px;
+}
+
+.action:hover{
+    font-size: 35px;
+    color: #2196f3!important
+}

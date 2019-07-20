@@ -1,0 +1,225 @@
+<section id="content" class="content-alt">
+  <div class="container">
+    <div class="card">
+      <div class="card-header bgm-blue" style="background: #888!important;">
+        <h2>Configuración de tiempos de expiración</h2>
+      </div>
+      <div class="card-body card-padding">
+        <div class="row" style="margin-top: 20px; margin-bottom: 30px">
+          <div class="col-md-1"></div>
+
+          <div class="col-md-3">
+            <mat-slide-toggle (change)="editExpTimes($event)" [(ngModel)]="slideActive" color="info">Editar tiempos <br>en minutos</mat-slide-toggle>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <input [disabled]="disableEditExpTimes" matInput placeholder="Expiracion para comprador"
+                [(ngModel)]="expTime.comprador">
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <input [disabled]="disableEditExpTimes" matInput placeholder="Expiracion para proveedor"
+                [(ngModel)]="expTime.proveedor">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10"></div>
+          <div class="col-md-2">
+            <button class="btn btn-primary btn-lg waves-effect" [disabled]="disableEditExpTimes" (click)="saveChanges()">
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card">
+        <form class="row" [formGroup]="configuracionForm">
+            <div class="col-md-12">
+
+                <!-- Información Complementaria Datos Maestros -->
+                <div class="card" >
+                    <div class="card-header bgm-blue">
+                        <h2>Información Complementaria Datos Maestros</h2>
+                    </div>
+                    <div class="card-body card-padding">
+                        <div class="row">
+                            <div class="col-md-11"></div>
+                            <div class="col-md-1" style="cursor: pointer">
+                                <i class="far fa-edit" (click)="postDataMasterOption()"></i>
+                            </div>
+                        </div>
+                        <div class="row" formGroupName="datosMaestros">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Grupo de cuentas:</label>
+                                        <input type="text" class="form-control" placeholder="NAL"
+                                        matInput formControlName="grupoCuentas" [matAutocomplete]="auto" required>
+                                        <mat-autocomplete #auto="matAutocomplete">
+                                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                                {{option}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Concepto bus 1:</label>
+                                        <input type="text" class="form-control" placeholder="ECOSOLARIS" formControlName="conceptoBus1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Cuenta Asociada</label>
+                                        <input type="text" class="form-control" placeholder="2101010000" formControlName="cuentaAsociada">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Grupo Tesorería:</label>
+                                        <input type="text" class="form-control" placeholder="NAL" formControlName="grupoTesoreria">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Sociedad:</label>
+                                        <input type="text" class="form-control" placeholder="0002" formControlName="sociedad">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Forma Com Std:</label>
+                                        <input type="text" class="form-control" placeholder="INT Correo electronico" formControlName="formaCom">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Entrada Individual:</label>
+                                        <input type="text" class="form-control" placeholder="X" formControlName="entradaInd">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Verif fac dob:</label>
+                                        <input type="text" class="form-control" placeholder="X" formControlName="verifFac">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Org Compras:</label>
+                                        <input type="text" class="form-control" placeholder="0002" formControlName="orgCompras" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Idioma:</label>
+                                        <input type="text" class="form-control" placeholder="ES" formControlName="idioma">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Ind  Retención1:</label>
+                                        <input type="text" class="form-control" placeholder="01" formControlName="retencionInd01">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Tipo Retención1:</label>
+                                        <input type="text" class="form-control" placeholder="02" formControlName="retencionTipo01">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Sujeto:</label>
+                                        <input type="text" class="form-control" placeholder="X" formControlName="sujeto01">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Ramo:</label>
+                                        <input type="text" class="form-control" placeholder="036" formControlName="ramo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Vía de Pago:</label>
+                                        <input type="text" class="form-control" placeholder="B" formControlName="viaPago">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Ind  Retención2:</label>
+                                        <input type="text" class="form-control" placeholder="02" formControlName="retencionInd02">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Tipo Retención2:</label>
+                                        <input type="text" class="form-control" placeholder="03" formControlName="retencionTipo02">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Sujeto:</label>
+                                        <input type="text" class="form-control" placeholder="X" formControlName="sujeto02">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" *ngIf="false">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Comentarios referentes al rechazo:</label>
+                                        <textarea class="form-control" rows="5" placeholder="Escribe tus comentarios aquí...."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</section>

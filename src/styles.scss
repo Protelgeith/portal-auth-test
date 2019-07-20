@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~angular-tree-component/dist/angular-tree-component.css';
+@import '~@angular/material/theming';
+@import '~dragula/dist/dragula.css';
+
+$custom-typography: mat-typography-config(
+    $font-family: 'Exo'
+);
+
+// @include mat-core($custom-typography);
+
+.activo {
+  background-color: rgba(0,0,0,.15);
+}
+.card .card-header:not(.ch-alt) {
+  padding: 12px 14px;
+  border-radius: 8px 8px 0px 0px;
+}
+.card {
+  border-radius: 8px;
+}
+
+
+.hi-menu>li .dropdown-menu {
+  margin-top: 45px;
+}
+
+.block-header {
+  padding: 0;
+}
+.modal .modal-content {
+  border-radius: 8px;
+}
+.btn:not(.btn-link) {
+  border-radius: 4px;
+}
+.hi-menu>li>a {
+  border-radius: 8px;
+}
+body {
+  font-size: 14px;
+}
+
+.control-label {
+  font-weight: 500;
+}
+

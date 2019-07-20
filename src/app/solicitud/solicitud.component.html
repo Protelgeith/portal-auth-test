@@ -1,0 +1,333 @@
+<app-loading-modal *ngIf="loading"></app-loading-modal>
+<section id="content" class="content-alt">
+  <div class="container">
+      <!-- Título -->
+      <div class="block-header">
+          <h2>Solicitudes</h2>
+      </div>
+
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <!-- Encabezado -->
+                  <div class="card-header bgm-blue">
+                      <h2>Reporte de Seguimiento a Solicitudes</h2>
+                  </div>
+
+                  <!-- Filtros -->
+                  <div class="panel-group" role="tablist" aria-multiselectable="true" style="padding: 18px;margin-bottom: 0px;padding-bottom: 0px;">
+                      <div class="panel panel-collapse">
+                          <div class="panel-heading" role="tab" id="headingTwo">
+                              <h4 class="panel-title">
+                                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                     href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                      Filtros
+                                  </a>
+                              </h4>
+                          </div>
+                          <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                              <div class="panel-body">
+                                  <div class="card row" style="padding: 10px;padding-top: 25px;margin-bottom:0px;font-size: 12px;box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);">
+                                      <div class="col-md-3">
+                                          <div class="form-group">
+                                              <div class="fg-line">
+                                                  <label>Número de solicitud</label>
+                                                  <div class="row">
+                                                      <div class="col-md-6">
+                                                          <input type="text" class="form-control" placeholder="Desde">
+                                                      </div>
+                                                      <div class="col-md-6">
+                                                          <input type="text" class="form-control" placeholder="Hasta">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <div class="form-group">
+                                              <div class="fg-line">
+                                                  <label>Número de proveedor</label>
+                                                  <div class="row">
+                                                      <div class="col-md-6">
+                                                          <input type="text" class="form-control" placeholder="Desde">
+                                                      </div>
+                                                      <div class="col-md-6">
+                                                          <input type="text" class="form-control" placeholder="Hasta">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <div class="form-group">
+                                              <div class="fg-line">
+                                                  <label>Estatus de la solicitud</label>
+                                                  <div class="select">
+                                                      <select class="form-control">
+                                                          <option>Seleccionar</option>
+                                                          <option>Solicitada</option>
+                                                          <option>Pre-autorizada</option>
+                                                          <option>Creada</option>
+                                                          <option>Rechazada</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <div class="form-group">
+                                              <div class="fg-line">
+                                                  <label>Tipo de actividad</label>
+                                                  <div class="select">
+                                                      <select class="form-control">
+                                                          <option>Seleccionar</option>
+                                                          <option>Alta</option>
+                                                          <option>Modificación</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <div class="form-group">
+                                              <div class="fg-line">
+                                                  <label>Fecha de creación de la solicitud</label>
+                                                  <div class="row">
+                                                      <div class="col-md-6">
+                                                          <input type="text" class="form-control input-mask" data-mask="00/00/0000" placeholder="ej: 23/05/2014 &nbsp;&nbsp;&nbsp;&nbsp;a" autocomplete="off" maxlength="10">
+                                                      </div>
+                                                      <div class="col-md-6">
+                                                          <input type="text" class="form-control input-mask" data-mask="00/00/0000" placeholder="ej: 23/05/2014" autocomplete="off" maxlength="10">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <div class="form-group">
+                                              <div class="fg-line">
+                                                  <label>Fecha de autorización de la solicitud</label>
+                                                  <div class="row">
+                                                      <div class="col-md-6">
+                                                          <input type="text" class="form-control input-mask" data-mask="00/00/0000" placeholder="ej: 23/05/2014 &nbsp;&nbsp;&nbsp;&nbsp;a" autocomplete="off" maxlength="10">
+                                                      </div>
+                                                      <div class="col-md-6">
+                                                          <input type="text" class="form-control input-mask" data-mask="00/00/0000" placeholder="ej: 23/05/2014" autocomplete="off" maxlength="10">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <div class="form-group">
+                                              <div class="fg-line">
+                                                  <label>Institución</label>
+                                                  <div class="select">
+                                                      <select class="form-control">
+                                                          <option>Seleccionar</option>
+                                                          <option>ITESM</option>
+                                                          <option>UTM</option>
+                                                          <option>NIC</option>
+                                                          <option>Sorteos</option>
+                                                          <option>Tec Salud</option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <div class="form-group">
+                                              <div class="fg-line">
+                                                  <label>Usuario liberador de la solicitud</label>
+                                                  <input type="text" class="form-control" placeholder="Usuario liberador">
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-sm-12 m-b-20 m-t-0">
+                                          <button class="btn btn-default btn-icon-text waves-effect pull-right"><i class="zmdi zmdi-filter-list"></i> Filtrar</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Tabla -->
+                  <div class="table-responsive">
+                      <table id="data-table-basic" class="table table-striped">
+                          <!-- Head -->
+                          <thead>
+                              <tr>
+                                  <th>Solicitud</th>
+                                  <th>Tipo de actividad</th>
+                                  <th>Estatus solicitud</th>
+                                  <th>Comentarios de solicitud rechazada</th>
+                                  <th>Fecha de solicitud</th>
+                                  <th>Comprador Autorizador</th>
+                                  <th>Fecha de autorización</th>
+                                  <th>Usuario Creador</th>
+                                  <th>Fecha de creación</th>
+                                  <th>Institución</th>
+                                  <th>Número proveedor</th>
+                                  <th>Nombre proveedor</th>
+                                  <th>Historial</th>
+                              </tr>
+                          </thead>
+
+                          <!-- Contenido tabla -->
+                          <tbody *ngIf="solicitudes">
+                              <tr *ngFor="let solicitud of solicitudes; let i=index">
+
+                                  <!--  Solicitud -->
+                                  <td>
+                                      <a 
+                                      [routerLink]="['../registro/' + solicitud._id + '/' + solicitud.status]" [queryParams]="{rfc: solicitud.fiscalData.rfc, status: solicitud.status}">
+                                      {{solicitud.requestNumber | number: '3.0'}}
+                                      </a>
+                                  </td>
+
+                                  <!--  Tipo de Actividad -->
+                                  <td>{{solicitud.input.toString().replace(",", ", ")}}</td>
+
+                                  <!--  Estatus Solicitud -->
+                                  <td>
+                                      <span class="label label-info"
+                                        [ngClass]="{ 
+                                            'label-info': solicitud.status == 'Solicitada',
+                                            'label-default': solicitud.status == 'Completada',
+                                            'label-warning': solicitud.status == 'Actualizada',
+                                            'label-primary': solicitud.status == 'Pre Aprobada',
+                                            'label-success': solicitud.status == 'Aprobada', 
+                                            'label-danger': solicitud.status == 'Rechazada' 
+                                        }">
+                                          {{solicitud.status}}
+                                      </span>
+                                  </td>
+
+                                  <!--  Comentario de solicitud rechazada -->
+                                  <td>
+                                      {{solicitud.rejectComments}}
+                                  </td>
+                                  
+                                  <!--  Fecha de Solicitud -->
+                                  <td>
+                                      {{solicitud.createdAt | date}}
+                                  </td>
+
+                                  <!--  Comprador Autorizador -->
+                                  <td *ngIf="solicitud.authorization">{{solicitud.authorization.authorizator}}</td>
+                                  <td *ngIf="!solicitud.authorization"></td>
+
+
+                                  <!--  Fecha de Autorización -->
+                                  <td *ngIf="solicitud.authorization">{{solicitud.authorization.authDate | date}}</td>
+                                  <td *ngIf="!solicitud.authorization"></td>
+
+                                  <!--  Usuario Creador -->
+                                  <td *ngIf="solicitud.creation">{{solicitud.creation.creator}}</td>
+                                  <td *ngIf="!solicitud.creation"></td>
+
+                                  <!--  Fecha de Creación -->
+                                  <td *ngIf="solicitud.creation">{{solicitud.creation.createDate | date}}</td>
+                                  <td *ngIf="!solicitud.creation"></td>
+
+                                  <!--  Institución -->
+                                  <td>{{solicitud.institutions.toString().replace(",", ", ")}}</td>
+
+                                  <!--  Número Proveedor -->
+                                  <td>{{solicitud.numProveedor}}</td>
+
+                                  <!--  Nombre Proveedor -->
+                                  <td>
+                                      {{solicitud.fiscalData.name + solicitud.fiscalData.lastName1 + solicitud.fiscalData.lastName2}}
+                                  </td>
+
+                                  <!--  Historial -->
+                                  <td style="text-align: center; cursor:pointer" (click)="showTrace(modalRecibido, i)">
+                                      <i class="fas fa-file-alt" style="font-size: 35px"></i>
+                                  </td>
+                              </tr>
+
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+
+              
+
+  </div>
+</section>
+
+<!-- Modal Default -->
+<ng-template #modalRecibido style="overflow: hidden">
+        <div class="modal-dialog">
+                <!-- Encabezado -->
+                <div class="modal-header">
+                    <h2 style="text-align: center">Historial de solicitud</h2>
+                </div>
+                <!-- Cuerpo -->
+                <!-- Tabla -->
+                <div class="table-responsive" style="height: 400px">
+                        <table id="data-table-basic" class="table table-striped">
+                            <!-- Head -->
+                            <thead>
+                                <tr>
+                                    <th>Fecha de actualizacion</th>
+                                    <th>Actualizador</th>
+                                    <th>Estado</th>                                    
+                                    <th>Comentarios</th>
+                                </tr>
+                            </thead>
+    
+                            <!-- Contenido tabla -->
+                            <tbody>
+                                <tr *ngFor="let trace of traces">
+    
+                                    <!--  Fecha de actualizacion -->
+                                    <td>{{trace.updatedDate | date:'medium' }}</td>
+    
+                                    <!--  Actualizador -->
+                                    <td>{{trace.updater}}</td>
+    
+                                    <!--  Estatus -->
+                                    <td style="display: grid">
+                                        <span class="label label-info"
+                                            [ngClass]="{ 
+                                                'label-info': trace.status == 'Solicitada',
+                                                'label-default': trace.status == 'Completada',
+                                                'label-warning': trace.status == 'Actualizada',
+                                                'label-primary': trace.status == 'Pre Aprobada',
+                                                'label-success': trace.status == 'Aprobada', 
+                                                'label-danger': trace.status == 'Rechazada' 
+                                            }" style="padding: .9em 0.6em .9em">
+                                            {{trace.status}}
+                                        </span>
+                                    </td>
+    
+                                    <!--  Comentarios -->
+                                    <td>
+                                        {{trace.comments}}
+                                    </td>
+    
+                                </tr>
+    
+                            </tbody>
+                        </table>
+                    </div>
+                <!-- Cerrar -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link" data-dismiss="modal" (click)="modalRecRef.hide()">
+                        Salir
+                    </button>
+                </div>
+        </div>
+    </ng-template>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#data-table-basic').DataTable();
+  });
+</script>

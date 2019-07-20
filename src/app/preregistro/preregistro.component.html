@@ -1,0 +1,796 @@
+<section id="content" class="content-alt">
+    <div class="container">
+
+        <!-- Header -->
+        <div class="block-header">
+            <h2>Proporciónanos tus datos para poder contactarte:</h2>
+        </div>
+
+
+        <form class="row" [formGroup]="preregistroForm" (ngSubmit)="enviarPreRegistro(modalRecibido,1)">
+            <div class="col-xs-12">
+
+                <!-- Institución -->
+                <div class="card">
+                    <div class="card-header bgm-blue">
+                        <h2>Institución</h2>
+                    </div>
+                    <div class="card-body card-padding">
+                        <div class="row has-feedback"
+                            [ngClass]="{ 'has-error': instituciones.invalid && (instituciones.dirty || instituciones.touched) }">
+                            <div class="col-md-12" formArrayName="instituciones">
+                                <p class="c-black f-500 m-b-20">¿De qué institución te interesa ser proveedor?</p>
+
+                                <!-- Checkbox Todas -->
+                                <label class="checkbox checkbox-inline m-r-20">
+                                    <input type="checkbox" [checked]="selectInstituciones"
+                                        (change)="selectAllInstituciones()">
+                                    <i class="input-helper"></i>
+                                    Todas
+                                </label>
+
+                                <!-- Checkboxes de Instituciones -->
+                                <label class="checkbox checkbox-inline m-r-20"
+                                    *ngFor="let institucion of instituciones.controls; let i=index">
+                                    <input type="checkbox" [formControlName]="i" (change)="selectInstituciones = false">
+                                    <i class="input-helper"></i>
+                                    {{todasInstituciones[i]}}
+                                </label>
+
+                            </div>
+                            <small class="help-block p-l-15"
+                                *ngIf="instituciones.invalid && (instituciones.dirty || instituciones.touched)">
+                                Ingresa un dato válido
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datos fiscales -->
+                <div class="card">
+                    <div class="card-header bgm-blue">
+                        <h2>Datos Fiscales</h2>
+                    </div>
+                    <div class="card-body card-padding">
+                        <div class="row" formGroupName="datosFiscales">
+                            <!-- Persona -->
+                            <div class="col-md-12 m-b-20 has-feedback"
+                                [ngClass]="{ 'has-error': fh.validateField(datosFiscales, 'tipoPersona') }">
+                                <!-- Física -->
+                                <label class="radio radio-inline m-r-20">
+                                    <input type="radio" formControlName="tipoPersona" [value]="'fisica'"
+                                        (change)="setApellidosValidation()">
+                                    <i class="input-helper"></i>
+                                    Persona física
+                                </label>
+                                <!-- Moral -->
+                                <label class="radio radio-inline m-r-20">
+                                    <input type="radio" formControlName="tipoPersona" [value]="'moral'"
+                                        (change)="setApellidosValidation()">
+                                    <i class="input-helper"></i>
+                                    Persona moral
+                                </label>
+                                <small class="help-block" *ngIf="fh.validateField(datosFiscales, 'tipoPersona')">
+                                    Ingresa un dato válido
+                                </small>
+                            </div>
+
+                            <!-- RFC -->
+                            <div class="col-md-3">
+                                <div class="form-group has-feedback"
+                                    [ngClass]="{ 'has-error': fh.validateField(datosFiscales, 'rfc') }">
+                                    <div class="fg-line">
+                                        <label class="control-label">
+                                            RFC / Núm. Ident. Fiscal:*
+                                        </label>
+                                        <input id="rfc" type="text" class="form-control" placeholder="RFC"
+                                            formControlName="rfc" required>
+                                        <small class="help-block" *ngIf="fh.validateField(datosFiscales, 'rfc')">
+                                            Ingresa un dato válido
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CURP -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Curp solo PF México:</label>
+                                        <input type="text" class="form-control" placeholder="CURP"
+                                            formControlName="curp">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tipo de Insumo -->
+                            <div class="col-md-3">
+                                <div class="form-group has-feedback"
+                                    [ngClass]="{ 'has-error': fh.validateField(datosFiscales, 'insumo') }">
+                                    <div class="fg-line">
+                                        <label class="control-label">
+                                            Tipo de Insumo:*
+                                        </label>
+                                        <mat-form-field>
+                                            <mat-select placeholder="" formControlName="insumo" multiple required>
+                                                <mat-option *ngFor="let i of insumos" [value]="i">
+                                                    {{i}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Giro del Negocio -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label class="m-0">Giro del Negocio:</label>
+                                        <mat-form-field>
+                                            <mat-select placeholder="" formControlName="giro" multiple>
+                                                <mat-option *ngFor="let g of giros" [value]="g">
+                                                    {{g}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Nombre o Razón Social -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label class="control-label">
+                                            Nombre o Razón Social:*
+                                        </label>
+                                        <div class="row">
+                                            <!-- Nombre -->
+                                            <div class="col-md-4 has-feedback"
+                                                [ngClass]="{ 'has-error': fh.validateField(datosFiscales, 'nombre') }">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Nombre o Razón Social" formControlName="nombre"
+                                                    required>
+                                                <small class="help-block"
+                                                    *ngIf="fh.validateField(datosFiscales, 'nombre')">
+                                                    Ingresa un dato válido
+                                                </small>
+                                            </div>
+
+                                            <!-- Apellido Paterno -->
+                                            <div class="col-md-4"
+                                                *ngIf="datosFiscales.controls.tipoPersona.value=='fisica'"
+                                                [ngClass]="{ 'has-error': fh.validateField(datosFiscales, 'apellidoP') }">
+                                                <input type="text" class="form-control" placeholder="Apellido Paterno"
+                                                    formControlName="apellidoP" required>
+                                                <small class="help-block"
+                                                    *ngIf="fh.validateField(datosFiscales, 'apellidoP')">
+                                                    Ingresa un dato válido
+                                                </small>
+                                            </div>
+                                            <!-- Apellido Materno -->
+                                            <div class="col-md-4"
+                                                *ngIf="datosFiscales.controls.tipoPersona.value=='fisica'"
+                                                [ngClass]="{ 'has-error': fh.validateField(datosFiscales, 'apellidoM') }">
+                                                <input type="text" class="form-control" placeholder="Apellido Materno"
+                                                    formControlName="apellidoM" required>
+                                                <small class="help-block"
+                                                    *ngIf="fh.validateField(datosFiscales, 'apellidoM')">
+                                                    Ingresa un dato válido
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Calle -->
+                            <div class="col-md-4">
+                                <div class="form-group has-feedback"
+                                    [ngClass]="{ 'has-error': fh.validateField(datosFiscales, 'calle') }">
+                                    <div class="fg-line">
+                                        <label class="control-label">
+                                            Calle:*
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Calle"
+                                            formControlName="calle" required>
+                                        <small class="help-block" *ngIf="fh.validateField(datosFiscales, 'calle')">
+                                            Ingresa un dato válido
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Número -->
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label class="control-label">
+                                            Número:
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Número"
+                                            formControlName="numero">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Colonia -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Colonia:</label>
+                                        <input type="text" class="form-control" placeholder="Colonia"
+                                            formControlName="colonia">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Código Postal -->
+                            <div class="col-md-2">
+                                <div class="form-group has-feedback"
+                                    [ngClass]="{ 'has-error': fh.validateField(datosFiscales, 'codigoPostal') }">
+                                    <div class="fg-line">
+                                        <label class="control-label">
+                                            Código Postal:*
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Código Postal"
+                                            formControlName="codigoPostal" required>
+                                        <small class="help-block"
+                                            *ngIf="fh.validateField(datosFiscales, 'codigoPostal')">
+                                            Ingresa un dato válido
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Población -->
+                            <div class="col-md-4">
+                                <div class="form-group has-feedback"
+                                    [ngClass]="{ 'has-error': fh.validateField(datosFiscales, 'poblacion') }">
+                                    <div class="fg-line">
+                                        <label class="control-label">
+                                            Población:*
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Población"
+                                            formControlName="poblacion" required>
+                                        <small class="help-block" *ngIf="fh.validateField(datosFiscales, 'poblacion')">
+                                            Ingresa un dato válido
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- País -->
+                            <div class="col-md-4">
+                                <div class="form-group has-feedback"
+                                    [ngClass]="{ 'has-error': fh.validateField(datosFiscales, 'pais') }">
+                                    <div class="fg-line">
+                                        <label class="control-label">
+                                            País:*
+                                        </label>
+                                        <div class="select">
+                                            <select class="form-control" formControlName="pais"
+                                                (change)="setRFCValidation()" required>
+                                                <option disabled>Seleccionar</option>
+                                                <option *ngFor="let p of paises" [value]="p">
+                                                    {{p}}
+                                                </option>
+                                            </select>
+                                            <small class="help-block" *ngIf="fh.validateField(datosFiscales, 'pais')">
+                                                Ingresa un dato válido
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Región -->
+                            <div class="col-md-4">
+                                <div class="form-group has-feedback"
+                                    [ngClass]="{ 'has-error': fh.validateField(datosFiscales, 'region') }">
+                                    <div class="fg-line">
+                                        <label class="control-label">
+                                            Región:*:
+                                        </label>
+                                        <div class="select">
+                                            <select class="form-control" formControlName="region" required>
+                                                <option disabled>Seleccionar</option>
+                                                <option *ngFor="let r of regiones" [value]="r">
+                                                    {{r}}
+                                                </option>
+                                            </select>
+                                            <small class="help-block" *ngIf="fh.validateField(datosFiscales, 'region')">
+                                                Ingresa un dato válido
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datos de Ventas -->
+                <div class="card">
+                    <div class="card-header bgm-blue">
+                        <h2>Datos de Ventas</h2>
+                    </div>
+                    <div class="card-body card-padding">
+                        <div class="row" formGroupName="datosVentas">
+
+                            <!-- Nombre de Contacto -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Nombre de Contacto:</label>
+                                        <input type="text" class="form-control" placeholder="Nombre de contacto"
+                                            formControlName="nombreContacto">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Teléfono móvil -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Teléfono móvil:</label>
+                                        <input type="text" class="form-control" placeholder="Teléfono móvil"
+                                            formControlName="telMovil">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Teléfono fijo -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Teléfono fijo:</label>
+                                        <input type="text" class="form-control" placeholder="Teléfono fijo"
+                                            formControlName="telFijo">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Extensión -->
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Extensión:</label>
+                                        <input type="text" class="form-control" placeholder="Extensión"
+                                            formControlName="ext">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Teléfono fijo 2 -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Teléfono fijo 2:</label>
+                                        <input type="text" class="form-control" placeholder="Teléfono fijo 2"
+                                            formControlName="telFijo2">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Extensión 2 -->
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Extensión:</label>
+                                        <input type="text" class="form-control" placeholder="Extensión"
+                                            formControlName="ext2">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fax -->
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Fax:</label>
+                                        <input type="text" class="form-control" placeholder="Fax" formControlName="fax">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Extensión fax -->
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Extensión:</label>
+                                        <input type="text" class="form-control" placeholder="Extensión"
+                                            formControlName="extFax">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Correo electrónico -->
+                            <div class="col-md-3">
+                                <div class="form-group has-feedback"
+                                    [ngClass]="{ 'has-error': fh.validateField(datosVentas, 'email') }">
+                                    <div class="fg-line">
+                                        <label>Correo electrónico:</label>
+                                        <input type="text" class="form-control" placeholder="Correo electrónico"
+                                            formControlName="email" required>
+                                    </div>
+                                    <small class="help-block" *ngIf="fh.validateField(datosVentas, 'email')">
+                                        Ingresa un dato válido
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Página web -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Pagina WEB:</label>
+                                        <input type="text" class="form-control" placeholder="Pagina WEB"
+                                            formControlName="pagina">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Empleado o dueño -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>¿Eres empleado o dueño?</label>
+                                        <div class="select">
+                                            <select class="form-control" formControlName="empleadoDueno">
+                                                <option disabled>Seleccionar</option>
+                                                <option [value]="'empleado'">Empleado</option>
+                                                <option [value]="'dueño'">Dueño</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Exatec -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>¿Eres Exatec? Proporciónanos tu matricula:</label>
+                                        <input type="text" class="form-control" placeholder="Matrícula"
+                                            formControlName="exatec">
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datos Bancarios y de Correspondencia -->
+                <div class="card" *ngIf="providerVip">
+                    <div class="card-header bgm-blue">
+                        <h2>Datos Bancarios y de Correspondencia</h2>
+                    </div>
+                    <div class="card-body card-padding">
+                        <div class="row" formGroupName="datosBanco">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>País del banco:</label>
+                                        <div class="select">
+                                            <select class="form-control" formControlName="paisBanco">
+                                                <option>Seleccionar</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Banco:</label>
+                                        <div class="select">
+                                            <select class="form-control" formControlName="banco">
+                                                <option>Seleccionar</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>CLABE Bancaria:</label>
+                                        <input type="text" class="form-control" placeholder="CLABE Bancaria"
+                                            formControlName="clabe">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Titular de la cuenta:</label>
+                                        <input type="text" class="form-control" placeholder="Titular de la cuenta"
+                                            formControlName="titularCuenta">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Clave Control:</label>
+                                        <input type="text" class="form-control" placeholder="Clave Control"
+                                            formControlName="claveControl">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Moneda:</label>
+                                        <div class="select">
+                                            <select class="form-control" formControlName="moneda">
+                                                <option>Seleccionar</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Contacto cobranza:</label>
+                                        <input type="text" class="form-control" placeholder="Contacto cobranza"
+                                            formControlName="contactoCobranza">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Teléfono:</label>
+                                        <input type="text" class="form-control" placeholder="Teléfono"
+                                            formControlName="telefono">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>E-mail:</label>
+                                        <input type="text" class="form-control" placeholder="E-mail"
+                                            formControlName="email">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documentos -->
+                <div class="card" *ngIf="(providerVip && (esPersonaFisica || esPersonaMoral))">
+                    <div class="card-header bgm-blue" style="background: #888!important;">
+                        <h2>Documentos</h2>
+                    </div>
+                    <div class="card-body card-padding">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p><label>Estado de Cuenta</label></p>
+                                <a href="">estado_de_cuenta.pdf</a>
+                            </div>
+                            <div class="col-sm-4">
+                                <p><label>Cédula fiscal</label></p>
+                                <a href="">cedula_fiscal.pdf</a>
+                            </div>
+                            <div class="col-sm-4" *ngIf="esPersonaMoral">
+                                <p><label>Acta Constitutiva</label></p>
+                                <a href="">acta_constitutiva.pdf</a>
+                            </div>
+                            <div class="col-sm-4" *ngIf="esPersonaFisica">
+                                <p><label>Carta de no preponderancia</label></p>
+                                <a href="">carta_no_preponderancia.pdf</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comentarios -->
+                <div class="card" *ngIf="providerVip">
+                    <div class="card-header bgm-blue" style="background: #888!important;">
+                        <h2>Comentarios</h2>
+                    </div>
+                    <div class="card-body card-padding">
+                        <div class="row" formGroupName="comentarios">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="fg-line">
+                                        <label>Comentarios:</label>
+                                        <textarea class="form-control" rows="5"
+                                            placeholder="Escribe tus comentarios aquí...."
+                                            formControlName="comentarios"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="checkbox m-b-15">
+                                    <label>
+                                        <input type="checkbox" [checked]="terminos"
+                                            (click)="showModal(modalRecibido,2);false" formControlName="terminos">
+                                        <i class="input-helper"></i>
+                                        Declaro haber leído y aceptado el código de ética del Tecnológico de Monterrey
+                                    </label>
+                                </div>
+                                <div class="checkbox m-b-15">
+                                    <label>
+                                        <input type="checkbox" [checked]="politicaPriv"
+                                            (click)="showModal(modalRecibido,3);false" formControlName="politicaPriv">
+                                        <i class="input-helper"></i>
+                                        Declaro haber leído y aceptado los términos de uso y la política de privacidad.
+                                        *
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-demo" style="text-align: right;">
+                    <!-- Cancelar -->
+                    <button (click)="cancelarPreregistro=true" class="btn btn-danger btn-lg waves-effect">
+                        Cancelar
+                    </button>
+                    <!-- Enviar -->
+                    <button type="submit" class="btn btn-primary btn-lg waves-effect">
+                        Enviar
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+<!-- Modal Default -->
+<ng-template #modalRecibido>
+    <ng-container [ngSwitch]="typeModal">
+
+        <div class="modal-dialog" *ngSwitchCase=1>
+            <!-- Encabezado -->
+            <div class="modal-header">
+                <h4>Estimado Proveedor del Tecnológico de Monterrey</h4>
+            </div>
+            <!-- Cuerpo -->
+            <div class="modal-body">
+                <p>Hemos recibido su solicitud, la cual será procesada por nuestros especialistas, en breve recibirá un
+                    correo electrónico a la cuenta que nos proporciono en el apartado de ventas, en el cual se le
+                    notifica
+                    su alta o alguna observación para poder procesarla, así como algunas instrucciones relacionadas al
+                    proceso de compra, entrega de mercancía y pagos.</p>
+            </div>
+            <!-- Cerrar -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal" (click)="modalRecRef.hide()">
+                    Salir
+                </button>
+            </div>
+        </div>
+        <div class="modal-dialog" *ngSwitchCase=2>
+            <!-- Encabezado -->
+            <div class="modal-header">
+                <h4>Terminos</h4>
+            </div>
+            <!-- Cuerpo -->
+            <div class="modal-body">
+                <p>Hemos recibido su solicitud, la cual será procesada por nuestros especialistas, en breve recibirá un
+                    correo electrónico a la cuenta que nos proporciono en el apartado de ventas, en el cual se le
+                    notifica
+                    su alta o alguna observación para poder procesarla, así como algunas instrucciones relacionadas al
+                    proceso de compra, entrega de mercancía y pagos.</p>
+            </div>
+            <!-- Cerrar -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal"
+                    (click)="modalRecRef.hide();terminos=true">
+                    Acpetar
+                </button>
+            </div>
+        </div>
+        <div class="modal-dialog" *ngSwitchCase=3>
+            <!-- Encabezado -->
+            <div class="modal-header">
+                <h4>Politicas</h4>
+            </div>
+            <!-- Cuerpo -->
+            <div class="modal-body">
+                <p>Hemos recibido su solicitud, la cual será procesada por nuestros especialistas, en breve recibirá un
+                    correo electrónico a la cuenta que nos proporciono en el apartado de ventas, en el cual se le
+                    notifica
+                    su alta o alguna observación para poder procesarla, así como algunas instrucciones relacionadas al
+                    proceso de compra, entrega de mercancía y pagos.
+
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, doloremque dolores quas rerum
+                    earum reprehenderit. Fugiat minima impedit saepe culpa ipsum amet, eveniet numquam ducimus, magni
+                    voluptates quae aut iusto.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, in. Vitae quod reiciendis placeat
+                    officiis facere sequi! Fugiat eaque quis iure ducimus hic, incidunt modi nobis neque maiores,
+                    tenetur repudiandae!
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti repellendus architecto quae
+                    dolorum autem a at quia alias, officia explicabo aliquam? Beatae et ea possimus in magnam modi
+                    ducimus sed.
+
+                </p>
+            </div>
+            <!-- Cerrar -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal"
+                    (click)="modalRecRef.hide();politicaPriv=true">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

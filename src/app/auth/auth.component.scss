@@ -1,0 +1,46 @@
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.example-card {
+  width: 400px;
+  margin: 4% auto;
+  padding-top: 0px;
+}
+
+.mat-card-title {
+  font-size: 16px;
+}
+
+form, .mat-card-header, .mat-card-actions {
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  background: #2196f3;
+  padding: 50px 100px;
+}
+
+.mat-card-content{
+  text-align: center !important;
+}
+
+.mat-list-item{
+  font-size: 10px;
+  height: auto !important;
+  padding-left: 15px !important;  
+}
+
+.closeModal{
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  padding-top: 5px;
+  padding-right: 10px;
+  cursor: pointer;
+}

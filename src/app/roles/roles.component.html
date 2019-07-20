@@ -1,0 +1,242 @@
+<app-loading-modal *ngIf="loading"></app-loading-modal>
+<section id="content" class="content-alt">
+    <div class="container">
+        <div class="block-header" style="display: flex; justify-content:space-between">
+            <h2 style="align-self: center">Roles</h2>
+            <span style="font-size: 1.5em; margin-right: 50px;">
+                <span class="icon-background" (click)="openDialog()">
+                    <i style="cursor: pointer; color: white" class="fas fa-user-plus"></i>
+                </span>
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bgm-blue">
+                        <h2>Tabla de roles y accesos a información del portal</h2>
+                    </div>
+                    <!-- Filtros -->
+                    <div class="panel-group" role="tablist" aria-multiselectable="true"
+                        style="padding: 18px;margin-bottom: 0px;padding-bottom: 0px;">
+                        <div class="panel panel-collapse">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                        href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Filtros
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <div class="card row"
+                                        style="padding: 10px;padding-top: 25px;margin-bottom:0px;font-size: 12px;box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label>Rol de usuario</label>
+                                                    <div class="select">
+                                                        <select class="form-control" (change)="filterData($event,1)">
+                                                            <option value="" disabled selected>Seleccionar</option>
+                                                            <option value=undefined>Todos</option>
+                                                            <option value="proveedor">Proveedor</option>
+                                                            <option value="admin">Admin</option>
+                                                            <option value="comprador">Comprador</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label>Usuario activo</label>
+                                                    <div class="select">
+                                                        <select class="form-control" (change)="filterData($event,2)">
+                                                            <option value="" disabled selected>Seleccionar</option>
+                                                            <option value="">Todos</option>
+                                                            <option value="si">Si</option>
+                                                            <option value="no">No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label>Fecha de creación del usuario</label>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <input type="date" id="date-input"
+                                                                class="form-control input-mask"
+                                                                (change)="filterData($event,3)">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input type="date" id="date-input2"
+                                                                class="form-control input-mask"
+                                                                (change)="filterData($event,4)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label>Permisos</label>
+                                                    <div class="select">
+                                                        <select class="form-control" (change)="filterData($event,4)">
+                                                            <option value="" disabled selected>Seleccionar</option>
+                                                            <option value="true">Si</option>
+                                                            <option valiue="false">No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="data-table-basic" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>RFC del Proveedor</th>
+                                    <th>No Autorizado</th>
+                                    <th>Usuario Inactivo</th>
+                                    <th>Correo electrónico</th>
+                                    <th>Rol</th>
+                                    <th>Fecha de creación</th>
+                                    <th>Solicitud de Alta de proveedor</th>
+                                    <th>Información complementaria Comprador</th>
+                                    <th>Información complementaria Datos Maestros</th>
+                                    <th>Información Laserfiche</th>
+                                    <th>Lista de Asignación de claves de acceso</th>
+                                    <th>Reporte de prospectos</th>
+                                    <th>Seguimiento a solicitudes y reporte de seg. a sol.</th>
+                                    <th>Mantenimiento a listas desplegables</th>
+                                    <th>Historial</th>
+                                    <th>Editar usuario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let user of users; let userPos=index">
+                                    <td>{{user._id}}</td>
+                                    <td>{{user.rfc}}</td>
+                                    <td><i class="zmdi zmdi-block"></i></td>
+                                    <td>
+                                        <div class="checkbox m-b-15">
+                                            <label>
+                                                <mat-checkbox [checked]=user.activeUser [disabled]="enableEditRow(user)"
+                                                    (change)="updateActiveUser($event, user['_id'], userPos)">
+                                                </mat-checkbox>
+
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.rol}}</td>
+                                    <td>{{user.createdAt | date:'medium'}}</td>
+                                    <td *ngFor="let permission of user['permissions']; let i=index">
+                                        <div *ngFor="let actions of permission | keyvalue; let j=index">
+                                            <div class="checkbox m-b-15"
+                                                *ngFor="let action of actions.value | keyvalue">
+                                                <label>
+                                                    <mat-checkbox [checked]="action.value"
+                                                        [disabled]="enableEditRow(user)"
+                                                        (change)="updatePermissions($event, user['_id'], userPos, i , j, action.key)">
+                                                        {{action.key | json | removedorComillas |uppercase}}
+                                                    </mat-checkbox>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <!--  Historial -->
+                                    <td style="text-align: center;">
+                                        <i class="fas fa-file-alt action" style="cursor:pointer"
+                                            (click)="showTrace(modalRecibido,userPos)"></i>
+                                    </td>
+
+                                    <!-- Editar permisos-->
+                                    <td style="text-align: center;">
+                                        <i class="fas fa-user-edit action" style="cursor:pointer"
+                                            (click)="enableEdit(user._id)"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Modal Default -->
+    <ng-template #modalRecibido style="overflow: hidden">
+        <div class="modal-dialog">
+            <!-- Encabezado -->
+            <div class="modal-header">
+                <h2 style="text-align: center">Historial de solicitud</h2>
+            </div>
+            <!-- Cuerpo -->
+            <!-- Tabla -->
+            <div class="table-responsive" style="height: 400px">
+                <table id="data-table-basic" class="table table-striped">
+                    <!-- Head -->
+                    <thead>
+                        <tr>
+                            <th>Fecha de creación</th>
+                            <th>Actualizador</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+
+                    <!-- Contenido tabla -->
+                    <tbody>
+                        <tr *ngFor="let trace of traces">
+
+                            <!--  Fecha de actualizacion -->
+                            <td>{{trace.updatedDate | date:'medium' }}</td>
+
+                            <!--  Actualizador -->
+                            <td>{{trace.updater}}</td>
+
+                            <!--  Estatus -->
+                            <td style="display: grid">
+                                <span class="label label-info" [ngClass]="{ 
+                                                'label-warning': trace.status == 'Actualizado',
+                                                'label-success': trace.status == 'Auto Creado',
+                                                'label-success': trace.status == 'Creado'
+                                            }" style="padding: .9em 0.6em .9em">
+                                    {{trace.status}}
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Cerrar -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal" (click)="modalRecRef.hide()">
+                    Salir
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#data-table-basic').DataTable();
+    });
+</script>
